@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nutrición & Rutina Gym</title>
+    
+    <!-- Configuración exacta de tu icono de acceso directo -->
+    <link rel="apple-touch-icon" href="Aguacate.png?v=2">
+    <link rel="apple-touch-icon-precomposed" href="Aguacate.png?v=2">
+
     <style>
         :root {
             --primary: #059669;
@@ -19,35 +24,55 @@
             --border: #e2e8f0;
             --water-color: #0284c7;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
+        [data-theme="dark"] {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #3b82f6;
+            --secondary-dark: #2563eb;
+            --ai-color: #a78bfa;
+            --ai-dark: #8b5cf6;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --water-color: #38bdf8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; transition: background-color 0.3s, color 0.3s; }
         body { background-color: var(--bg-color); color: var(--text-main); padding-bottom: 75px; }
         
-        header { background: linear-gradient(135deg, #059669, #047857); color: white; padding: 18px 16px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background 0.3s ease; }
-        header.gym-mode { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
-        header.ai-mode { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-        h1 { font-size: 1.2rem; font-weight: 700; margin-bottom: 2px; }
+        header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 18px 16px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        header.gym-mode { background: linear-gradient(135deg, var(--secondary), var(--secondary-dark)); }
+        header.ai-mode { background: linear-gradient(135deg, var(--ai-color), var(--ai-dark)); }
+        
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        h1 { font-size: 1.2rem; font-weight: 700; }
         p.subtitle { font-size: 0.8rem; opacity: 0.9; }
         
+        .theme-toggle-btn { background: rgba(255,255,255,0.2); border: none; color: white; padding: 6px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
+
         .container { max-width: 600px; margin: 0 auto; padding: 16px; }
         .card { background: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid var(--border); }
         
         .days-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 16px; scrollbar-width: none; }
         .days-scroll::-webkit-scrollbar { display: none; }
-        .day-btn { background: white; border: 1px solid var(--border); padding: 8px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; cursor: pointer; transition: all 0.2s; }
+        .day-btn { background: var(--card-bg); border: 1px solid var(--border); padding: 8px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; cursor: pointer; }
         .day-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3); }
         .gym-mode .day-btn.active { background: var(--secondary); border-color: var(--secondary); box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3); }
 
         .progress-container { margin-bottom: 12px; }
         .progress-info { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; margin-bottom: 4px; color: var(--text-main); }
-        .progress-bar-bg { width: 100%; height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; }
+        .progress-bar-bg { width: 100%; height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; }
         .progress-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
         .progress-bar-water { height: 100%; background: var(--water-color); width: 0%; transition: width 0.3s ease; }
         .progress-bar-gym { height: 100%; background: var(--secondary); width: 0%; transition: width 0.3s ease; }
         
         .macros-grid-visual { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; border-top: 1px solid var(--border); padding-top: 12px; }
-        .macro-item { background: #f8fafc; padding: 8px; border-radius: 8px; text-align: center; border: 1px solid var(--border); }
+        .macro-item { background: var(--bg-color); padding: 8px; border-radius: 8px; text-align: center; border: 1px solid var(--border); }
         .macro-item span { display: block; font-size: 0.75rem; color: var(--text-muted); }
-        .macro-item strong { font-size: 0.85rem; color: var(--primary-dark); }
+        .macro-item strong { font-size: 0.85rem; color: var(--primary); }
 
         .item-row { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
         .item-row:last-child { border-bottom: none; }
@@ -59,40 +84,41 @@
         .item-title { font-size: 0.9rem; font-weight: 600; color: var(--text-main); margin: 2px 0; }
         .item-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; }
         
-        .warning-box { background: #fffbeb; border: 1px solid #fef3c7; color: #b45309; padding: 12px; border-radius: 8px; font-size: 0.8rem; margin-bottom: 16px; line-height: 1.4; }
-        .water-section { background: #f0f9ff; border: 1px solid #bae6fd; padding: 12px; border-radius: 8px; margin-top: 16px; }
+        .warning-box { background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); color: var(--text-main); padding: 12px; border-radius: 8px; font-size: 0.8rem; margin-bottom: 16px; line-height: 1.4; }
+        .water-section { background: rgba(2, 132, 199, 0.08); border: 1px solid rgba(2, 132, 199, 0.2); padding: 12px; border-radius: 8px; margin-top: 16px; }
         .water-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .water-btn { background: var(--water-color); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
 
-        .custom-meal-form { background: #f8fafc; border: 1px dashed var(--border); padding: 12px; border-radius: 8px; margin-top: 16px; }
-        .custom-meal-form h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: var(--primary-dark); }
-        .form-input { width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; }
+        .custom-meal-form { background: var(--bg-color); border: 1px dashed var(--border); padding: 12px; border-radius: 8px; margin-top: 16px; }
+        .custom-meal-form h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: var(--primary); }
+        .form-input { width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text-main); border-radius: 6px; font-size: 0.85rem; }
         .form-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 8px; }
-        .form-grid input { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.8rem; text-align: center; }
+        .form-grid input { width: 100%; padding: 6px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text-main); border-radius: 6px; font-size: 0.8rem; text-align: center; }
         .add-meal-btn { width: 100%; background: var(--primary); color: white; border: none; padding: 8px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
 
-        .ai-card { background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 16px; }
+        .ai-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 16px; }
         .ai-btn { width: 100%; background: var(--ai-color); color: white; border: none; padding: 12px; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2); }
-        .ai-shortcut { background: white; border: 1px solid var(--border); padding: 12px; border-radius: 10px; margin-top: 10px; text-align: left; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: var(--text-main); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .ai-shortcut { background: var(--bg-color); border: 1px solid var(--border); padding: 12px; border-radius: 10px; margin-top: 10px; text-align: left; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: var(--text-main); }
 
-        /* Oculto completamente por defecto para que no aparezca al iniciar */
         #toast { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; color: white; padding: 10px 18px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; }
 
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 8px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 8px 0; z-index: 100; }
         .nav-button { border: none; background: none; flex: 1; text-align: center; padding: 6px 0; color: var(--text-muted); cursor: pointer; font-size: 0.7rem; font-weight: 600; }
         .nav-button.active { color: var(--primary); }
         .nav-button.active.gym { color: var(--secondary); }
         .nav-button.active.ai { color: var(--ai-color); }
         .nav-icon { font-size: 1.1rem; display: block; margin-bottom: 2px; }
     </style>
-<link rel="apple-touch-icon" href="Aguacate.png?v=2">
-<link rel="apple-touch-icon-precomposed" href="Aguacate.png?v=2">
 </head>
-<body>
+<body data-theme="light">
 
     <header id="mainHeader">
-        <h1 id="headerTitle">Plan Nutricional 1.740 kcal</h1>
+        <div class="header-top">
+            <div></div>
+            <h1 id="headerTitle">Plan Nutricional 1.740 kcal</h1>
+            <button class="theme-toggle-btn" id="themeBtn" onclick="toggleTheme()">🌙 Oscuro</button>
+        </div>
         <p class="subtitle" id="headerSubtitle">Recomposición Corporal & Salud Lipídica</p>
     </header>
 
@@ -105,7 +131,7 @@
             </div>
 
             <div class="card">
-                <h3 style="font-size: 0.95rem; margin-bottom: 12px; font-weight: 700; color: var(--primary-dark);">Progreso Diario Nutrición</h3>
+                <h3 style="font-size: 0.95rem; margin-bottom: 12px; font-weight: 700; color: var(--primary);">Progreso Diario Nutrición</h3>
                 <div class="progress-container">
                     <div class="progress-info">
                         <span>Calorías (Kcal)</span>
@@ -134,8 +160,8 @@
                 <div class="water-section">
                     <div class="water-header">
                         <div>
-                            <span style="font-size: 0.85rem; font-weight: 700; color: #0369a1;">Control de Hidratación</span>
-                            <p style="font-size: 0.75rem; color: #0284c7;" id="waterText">0.0 / 2.5 Litros</p>
+                            <span style="font-size: 0.85rem; font-weight: 700; color: var(--water-color);">Control de Hidratación</span>
+                            <p style="font-size: 0.75rem; color: var(--water-color);" id="waterText">0.0 / 2.5 Litros</p>
                         </div>
                         <button class="water-btn" onclick="addWater()">+ 250ml Vaso</button>
                     </div>
@@ -150,7 +176,7 @@
 
         <div id="tabRutina" style="display: none;">
             <div class="card">
-                <h3 style="font-size: 0.95rem; margin-bottom: 12px; font-weight: 700; color: var(--secondary-dark);">Progreso del Entrenamiento</h3>
+                <h3 style="font-size: 0.95rem; margin-bottom: 12px; font-weight: 700; color: var(--secondary);">Progreso del Entrenamiento</h3>
                 <div class="progress-container">
                     <div class="progress-info">
                         <span>Ejercicios Completados</span>
@@ -168,7 +194,7 @@
         <div id="tabAI" style="display: none;">
             <div class="ai-card">
                 <span style="font-size: 2rem;">✨</span>
-                <h3 style="font-size: 1rem; color: var(--ai-dark); margin: 6px 0;">Asistente Gemini</h3>
+                <h3 style="font-size: 1rem; color: var(--ai-color); margin: 6px 0;">Asistente Gemini</h3>
                 <p style="font-size: 0.8rem; color: var(--text-muted);">Abre la app de Gemini en tu iPhone para realizar consultas o análisis de fotos.</p>
                 <button class="ai-btn" onclick="openGeminiApp()">
                     🚀 Abrir App de Gemini
@@ -178,7 +204,7 @@
             <h4 style="font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; color: var(--text-main);">Preguntas Predeterminadas:</h4>
             
             <div class="ai-shortcut" onclick="copiarPreguntaAlPulsar()">
-                📸 <strong>¿Cuántas calorías y macronutrientes exactos tiene la foto de este alimento?</strong>
+                📸 <strong>¿Cuántas calorías y macronutrientes tiene la foto de este alimento?</strong>
                 <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Copia la pregunta, abre Gemini y pégala junto con tu foto.</p>
             </div>
         </div>
@@ -361,6 +387,20 @@
             initApp();
         }
 
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.getElementById('themeBtn');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeBtn.innerText = '🌙 Oscuro';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeBtn.innerText = '☀️ Claro';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
         function renderDaysBar() {
             const container = document.getElementById('daysContainer');
             container.innerHTML = '';
@@ -382,7 +422,7 @@
             const dayInfo = dietData[currentDay];
             
             let html = `
-                <h3 style="font-size: 1rem; margin-bottom: 2px; font-weight: 700; color: var(--primary-dark);">${dayInfo.name}</h3>
+                <h3 style="font-size: 1rem; margin-bottom: 2px; font-weight: 700; color: var(--primary);">${dayInfo.name}</h3>
                 <p style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 12px;">${dayInfo.type}</p>
             `;
             
@@ -406,10 +446,10 @@
                 const key = `custom_${currentDay}_${index}`;
                 const isChecked = checkedMeals[key] ? 'checked' : '';
                 html += `
-                    <div class="item-row" style="background: #f0fdf4; padding: 8px; border-radius: 8px; margin-top: 6px;">
+                    <div class="item-row" style="background: rgba(16, 185, 129, 0.05); padding: 8px; border-radius: 8px; margin-top: 6px;">
                         <input type="checkbox" class="item-checkbox" id="meal_${key}" ${isChecked} onchange="toggleCustomMeal(${currentDay}, ${index})">
                         <div class="item-content">
-                            <span class="item-tag" style="color: #047857;">Comida Libre / Extra</span>
+                            <span class="item-tag" style="color: var(--primary);">Comida Libre / Extra</span>
                             <div class="item-title">${custom.title}</div>
                             <div class="item-desc">🔥 ${custom.kcal} kcal | 🥩 Prot: ${custom.p}g | 🍞 Carbs: ${custom.c}g | 🥑 Grasas: ${custom.f}g</div>
                         </div>
@@ -439,7 +479,7 @@
             const gymInfo = routineData[currentDay];
             
             let html = `
-                <h3 style="font-size: 1rem; margin-bottom: 2px; font-weight: 700; color: var(--secondary-dark);">${gymInfo.name}</h3>
+                <h3 style="font-size: 1rem; margin-bottom: 2px; font-weight: 700; color: var(--secondary);">${gymInfo.name}</h3>
                 <p style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 12px;">${gymInfo.session}</p>
             `;
             
@@ -635,6 +675,12 @@
 
             const savedCustom = localStorage.getItem('custom_meals');
             if (savedCustom) customMeals = JSON.parse(savedCustom);
+
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('themeBtn').innerText = '☀️ Claro';
+            }
         }
 
         window.onload = () => {
