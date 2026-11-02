@@ -609,7 +609,12 @@
         function addWater() {
             waterMl += 250;
             if (waterMl > 3000) waterMl = 0;
+            
+            // Guardamos la cantidad y la fecha actual de hoy (YYYY-MM-DD)
+            const todayStr = new Date().toISOString().split('T')[0];
             localStorage.setItem('water_ml', waterMl);
+            localStorage.setItem('water_date', todayStr);
+            
             updateWaterUI();
         }
 
@@ -665,7 +670,17 @@
 
         function loadStorage() {
             const savedWater = localStorage.getItem('water_ml');
-            if (savedWater) waterMl = parseInt(savedWater);
+            const savedDate = localStorage.getItem('water_date');
+            const todayStr = new Date().toISOString().split('T')[0];
+
+            // Si la fecha guardada no es la de hoy, reiniciamos el agua a 0 automáticamente
+            if (savedDate !== todayStr) {
+                waterMl = 0;
+                localStorage.setItem('water_ml', 0);
+                localStorage.setItem('water_date', todayStr);
+            } else if (savedWater) {
+                waterMl = parseInt(savedWater);
+            }
 
             const savedMeals = localStorage.getItem('checked_meals');
             if (savedMeals) checkedMeals = JSON.parse(savedMeals);
